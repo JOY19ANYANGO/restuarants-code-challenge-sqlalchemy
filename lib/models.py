@@ -34,6 +34,13 @@ class Customer(Base):
     
     def __repr__(self):
         return f"<Customer {self.first_name} ,{self.last_name}>"
+    def customer_reviews(self):
+        reviews=session.query(Review).filter_by(customer_id=self.id).all()
+        return reviews
+    
+    def customer_restaurants(self):
+        reviews=session.query(Review).filter_by(customer_id=self.id).all()
+        return [review.restaurant for review in reviews]
 
 class Review(Base):
     __tablename__ = "reviews"

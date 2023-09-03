@@ -15,3 +15,7 @@ print(review.review_restaurant())
 restaurant = session.query(Restaurant).first()
 print(restaurant.restaurant_reviews())
 print(restaurant.restaurant_customers())
+
+customer = session.query(Customer).get(37)
+print(customer.customer_reviews())
+print(customer.customer_restaurants())
