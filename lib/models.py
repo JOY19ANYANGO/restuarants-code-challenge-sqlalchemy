@@ -22,6 +22,9 @@ class Restaurant(Base):
     def restaurant_reviews(self):
         reviews=session.query(Review).filter_by(restaurant_id=self.id).all()
         return reviews
+    def restaurant_customers(self):
+        reviews=session.query(Review).filter_by(restaurant_id=self.id).all()
+        return [review.customer for review in reviews]
 
 class Customer(Base):
     __tablename__="customers"  
