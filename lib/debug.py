@@ -9,4 +9,5 @@ if __name__ == '__main__':
     session = Session()
 
 review = session.query(Review).first()
-print( review.review_customer(1))
+print( review.review_customer())
+print(review.review_restaurant())

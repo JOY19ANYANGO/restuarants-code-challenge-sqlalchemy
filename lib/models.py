@@ -19,7 +19,7 @@ class Restaurant(Base):
 
     def __repr__(self):
         return f'<Restaurant {self.name}>'
-
+    
 
 class Customer(Base):
     __tablename__="customers"  
@@ -41,10 +41,12 @@ class Review(Base):
     restaurant = relationship("Restaurant", backref=backref("reviews"))
     customer = relationship("Customer", backref=backref("reviews"))
     
-    def review_customer(self,id):
-        review=session.query(Review).filter(Review.id==self.id).first()
-        return review.customer
-    
+    def review_customer(self):
+        
+        return self.customer
+    def review_restaurant(self):
+        
+        return self.restaurant
     
     def __repr__(self):
         return f"<Review {self.star_rating}>"
