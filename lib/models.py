@@ -19,7 +19,9 @@ class Restaurant(Base):
 
     def __repr__(self):
         return f'<Restaurant {self.name}>'
-    
+    def restaurant_reviews(self):
+        reviews=session.query(Review).filter_by(restaurant_id=self.id).all()
+        return reviews
 
 class Customer(Base):
     __tablename__="customers"  
@@ -49,4 +51,4 @@ class Review(Base):
         return self.restaurant
     
     def __repr__(self):
-        return f"<Review {self.star_rating}>"
+        return f"<Review ,Star rating:{self.star_rating}>"

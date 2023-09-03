@@ -11,3 +11,6 @@ if __name__ == '__main__':
 review = session.query(Review).first()
 print( review.review_customer())
 print(review.review_restaurant())
+
+restaurant = session.query(Restaurant).first()
+print(restaurant.restaurant_reviews())
