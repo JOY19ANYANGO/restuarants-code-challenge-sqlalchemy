@@ -28,7 +28,8 @@ class Customer(Base):
         return f"<Customer {self.first_name}{self.last_name}>"
 
 class Review(Base):
-    ___tablename__="reviews"
+    __tablename__="reviews"
+    
     id=Column(Integer,primary_key=True) 
     star_rating=Column(Integer)
     restaurant_id=Column(Integer,ForeignKey('restaurants.id'))    
