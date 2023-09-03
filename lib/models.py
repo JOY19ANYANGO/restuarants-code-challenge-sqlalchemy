@@ -48,7 +48,13 @@ class Customer(Base):
     def customer_restaurants(self):
         reviews=session.query(Review).filter_by(customer_id=self.id).all()
         return [review.restaurant for review in reviews]
-
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+    def favorite_restaurant(self):
+        review=session.query(Review) .filter_by(customer_id=self.id).order_by(Review.star_rating.desc()).limit(1).first()
+        return review.restaurant
+        
+        
     # Define the relationship with Review explicitly
     reviews = relationship("Review", back_populates="customer")
     restaurants=relationship("Review",back_populates="customer",overlaps="reviews")
@@ -72,4 +78,4 @@ class Review(Base):
         return self.restaurant
 
     def __repr__(self):
-        return f"<Review, Star rating: {self.star_rating}>"
+        return f"<Review, Star rating: {self.star_rating},customer id:{self.customer_id},restaurant_id:{self.restaurant_id}>"
