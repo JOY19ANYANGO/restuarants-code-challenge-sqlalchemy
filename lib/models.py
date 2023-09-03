@@ -1,13 +1,16 @@
-from sqlalchemy import ForeignKey, Column, Integer, String, MetaData,Float
+from sqlalchemy import ForeignKey, Column, Integer, String, MetaData,Float,create_engine
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
-
+from sqlalchemy.orm import sessionmaker
 convention = {
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 }
 metadata = MetaData(naming_convention=convention)
 
 Base = declarative_base(metadata=metadata)
+engine = create_engine('sqlite:///restuarants.db')
+Session = sessionmaker(bind=engine)
+session = Session()
 class Restaurant(Base):
     __tablename__="restaurants"
     id=Column(Integer,primary_key=True)
@@ -25,7 +28,7 @@ class Customer(Base):
     last_name=Column(String)
     
     def __repr__(self):
-        return f"<Customer {self.first_name}{self.last_name}>"
+        return f"<Customer {self.first_name} ,{self.last_name}>"
 
 class Review(Base):
     __tablename__ = "reviews"
@@ -37,6 +40,11 @@ class Review(Base):
     
     restaurant = relationship("Restaurant", backref=backref("reviews"))
     customer = relationship("Customer", backref=backref("reviews"))
+    
+    def review_customer(self,id):
+        review=session.query(Review).filter(Review.id==self.id).first()
+        return review.customer
+    
     
     def __repr__(self):
         return f"<Review {self.star_rating}>"
