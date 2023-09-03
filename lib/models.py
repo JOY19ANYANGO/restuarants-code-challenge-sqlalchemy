@@ -25,4 +25,16 @@ class Customer(Base):
     last_name=Column(String)
     
     def __repr__(self):
-        return f"<Customer {self.first_name}{self.last_name}"
+        return f"<Customer {self.first_name}{self.last_name}>"
+
+class Review(Base):
+    ___tablename__="reviews"
+    id=Column(Integer,primary_key=True) 
+    star_rating=Column(Integer)
+    restaurant_id=Column(Integer,ForeignKey('restaurants.id'))    
+    customer_id=Column(Integer,ForeignKey('customers.id')) 
+    
+    restaurants=relationship("Restaurant",backref=backref("restaurants"))
+    restaurants=relationship("Customer",backref=backref("customers"))
+    def __repr__(self):
+        return f"<Review{self.star_rating}>"  
