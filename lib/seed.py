@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     restaurants = [
         Restaurant(
-            name=fake.name(),
+            name=fake.company(),
             price=random.randint(300, 6000)
         )
         for i in range(50)
@@ -38,8 +38,8 @@ if __name__ == '__main__':
 
     customers = [
         Customer(
-            first_name=fake.name(),
-            last_name=fake.name()
+            first_name=fake.first_name(),
+            last_name=fake.last_name()
         )
         for i in range(50)
     ]
