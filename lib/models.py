@@ -83,6 +83,8 @@ class Customer(Base):
     def favorite_restaurant(self):
         review=session.query(Review).filter_by(customer_id=self.id).order_by(Review.star_rating.desc()).limit(1).first()
         return review.restaurant
+    
+
     # adds review and makes it persist in the database
     def add_review(self, restaurant, rating):
       new_review = Review(
@@ -108,7 +110,7 @@ class Customer(Base):
       return "Reviews deleted successfully"
 
     
-    # Define the relationship with Review explicitly
+    
     
 class Review(Base):
     __tablename__ = "reviews"
