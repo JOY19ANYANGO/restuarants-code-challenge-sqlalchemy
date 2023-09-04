@@ -138,6 +138,10 @@ class Review(Base):
     def full_review(self):
         return f"Review for {self.customer.full_name()} by {self.restaurant.name} : {self.star_rating} stars"
 
-customer = session.query(Customer).filter_by(id=20).first()
 
-print(customer.delete_review(18))
+
+# test add review and  delete review methods
+customer1 = session.query(Customer).filter_by(id=20).first() # change id to desired customer
+print(customer1.delete_review(42))
+customer2 = session.query(Customer).filter_by(id=10).first() # change id to desired customer
+print(customer2.add_review(18, 5))
