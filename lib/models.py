@@ -64,7 +64,7 @@ class Customer(Base):
     
  # make customer object readable
     def __repr__(self):
-        return f"<Customer {self.first_name} ,{self.last_name}>"
+        return f"<Customer {self.first_name} {self.last_name}>"
     
     # return all reviews for a specific customer
     def customer_reviews(self):
