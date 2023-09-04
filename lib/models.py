@@ -136,7 +136,7 @@ class Review(Base):
     
     # return review in a specific format
     def full_review(self):
-        return f"Review for {self.customer.full_name()} by {self.restaurant.name} : {self.star_rating} stars"
+        return f"Review for {self.restaurant.name} by {self.customer.full_name()}  : {self.star_rating} stars"
 
 
 
