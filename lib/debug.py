@@ -17,11 +17,12 @@ restaurant = session.query(Restaurant).first()
 print(restaurant.restaurant_reviews())
 print(restaurant.restaurant_customers())
 
-customer = session.query(Customer).first()
+customer = session.query(Customer).get(6)
 print(customer.customer_reviews())
 print(customer.customer_restaurants())
 print(customer.full_name())  
 print(customer.favorite_restaurant())
+
 print(session.query(Customer).first().restaurants)
 print(session.query(Review).first().customer)
 print(session.query(Customer).first().restaurants)
