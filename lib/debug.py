@@ -11,18 +11,23 @@ if __name__ == '__main__':
 review = session.query(Review).first()
 print( review.review_customer())
 print(review.review_restaurant())
+print(review.full_review())
+
 
 
 restaurant = session.query(Restaurant).first()
 print(restaurant.restaurant_reviews())
 print(restaurant.restaurant_customers())
-
-customer = session.query(Customer).get(6)
+print("FAAAANCY")
+print(Restaurant.fanciest_restaurants())
+customer = session.query(Customer).first()
 print(customer.customer_reviews())
 print(customer.customer_restaurants())
 print(customer.full_name())  
-print(customer.favorite_restaurant())
 
 print(session.query(Customer).first().restaurants)
 print(session.query(Review).first().customer)
 print(session.query(Customer).first().restaurants)
+print(review.full_review())
+print(customer.favorite_restaurant())
+print(restaurant.all_reviews())

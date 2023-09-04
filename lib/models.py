@@ -20,15 +20,30 @@ class Restaurant(Base):
     price = Column(Float, nullable=False)
 
     def __repr__(self):
-        return f'<Restaurant {self.name}>'
+        return f'<Restaurant name:{self.name}, price:{self.price}>'
     def restaurant_reviews(self):
         reviews=session.query(Review).filter_by(restaurant_id=self.id).all()
         return reviews
     def restaurant_customers(self):
         reviews=session.query(Review).filter_by(restaurant_id=self.id).all()
         return [review.customer for review in reviews]
+    @classmethod
+    def fanciest_restaurants(cls):
+        restaurant=session.query(Restaurant).order_by(Restaurant.price.desc()).first()
+        return restaurant
+    
+    def all_reviews(self):
+        reviews = session.query(Review).filter_by(restaurant_id=self.id).all()
 
+        formatted_reviews = []
+        for review in reviews:
+            customer_full_name = review.customer.full_name()
+            formatted_review = (
+                f"Review for {self.name} by {customer_full_name}: {review.star_rating} stars."
+            )
+            formatted_reviews.append(formatted_review)
 
+        return formatted_reviews
     # Define the relationship with Review explicitly
     reviews = relationship("Review", back_populates="restaurant")
 
@@ -51,8 +66,9 @@ class Customer(Base):
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
     def favorite_restaurant(self):
-        review=session.query(Review) .filter_by(customer_id=self.id).order_by(Review.star_rating.desc()).limit(1).first()
+        review=session.query(Review).filter_by(customer_id=self.id).order_by(Review.star_rating.desc()).limit(1).first()
         return review.restaurant
+    
     def add_review(self, restaurant, rating):
       new_review = Review(
         star_rating=rating,
@@ -62,7 +78,11 @@ class Customer(Base):
       session.add(new_review)
       session.commit()
       return "Review added successfully"
-
+    def delete_review(self, review):
+        session.delete(review)
+        session.commit()
+        return "Review deleted successfully"
+    
     # Define the relationship with Review explicitly
     reviews = relationship("Review", back_populates="customer")
     restaurants=relationship("Review",back_populates="customer",overlaps="reviews")
@@ -87,7 +107,8 @@ class Review(Base):
 
     def __repr__(self):
         return f"<Review, Star rating: {self.star_rating},customer id:{self.customer_id},restaurant_id:{self.restaurant_id}>"
-
+    def full_review(self):
+        return f"Review for {self.customer.full_name()} by {self.restaurant.name} : {self.star_rating} stars"
 
 customer = session.query(Customer).first()
 print(customer.add_review(9,12))
